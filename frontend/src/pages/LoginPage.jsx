@@ -17,8 +17,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: "john.doe@example.com",
-    password: "password123",
+    email: "",
+    password: "",
   });
 
   const handleChanges = (e) => {

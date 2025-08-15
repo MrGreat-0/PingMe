@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/users", protectRoute, getUsersForSidebar);
 router.get("/:id", protectRoute, getMessages);
+// router.get("/user/:userId", protectRoute, getUserById);
 
 router.post("/send/:id", protectRoute, sendMessages);
 

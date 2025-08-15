@@ -108,14 +108,9 @@ export const connectSocket = () => (dispatch, getState) => {
 
     const newSocket = initSocket(BASE_URL, authUser._id);
 
-    // newSocket.connect();
+    newSocket.connect();
 
-    newSocket.off("connect");
     newSocket.off("getOnlineUsers");
-
-    newSocket.on("connect", () => {
-      // console.log("Socket connected 01:", newSocket.id);
-    });
 
     newSocket.on("getOnlineUsers", (userIds) => {
       // console.log("Socket connected 02:", newSocket.id);

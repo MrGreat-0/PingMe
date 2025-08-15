@@ -23,6 +23,14 @@ export const chatSlice = createSlice({
     clearChatError: (state) => {
       state.error = null;
     },
+    addNewUser: (state, action) => {
+      const userExists = state.users.some(
+        (user) => user._id === action.payload._id
+      );
+      if (!userExists) {
+        state.users.push(action.payload);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,10 +67,17 @@ export const chatSlice = createSlice({
       .addCase(sendMessage.rejected, (state, action) => {
         state.error = action.error.message;
       });
+    // addNewUser
+    // .addCase(fetchUserById.fulfilled, (state, action) => {
+    //   const userExists = state.users.some(
+    //     (user) => user._id === action.payload._id
+    //   );
+    //   if (!userExists) state.users.push(action.payload);
+    // });
   },
 });
 
-export const { setSelectedUser, addMessage, clearChatError } =
+export const { setSelectedUser, addMessage, clearChatError, addNewUser } =
   chatSlice.actions;
 
 export default chatSlice.reducer;

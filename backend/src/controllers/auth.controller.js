@@ -2,6 +2,7 @@ import User from '../models/user.model.js'
 import bcrypt from "bcryptjs"
 import { generateToken } from '../utils/token.util.js';
 import cloudinary from '../lib/cloudinary.js'
+import { io } from '../lib/socket.js';
 
 export const signup = async (req, res) => {
     const { fullName, email, password } = req.body;
@@ -26,6 +27,13 @@ export const signup = async (req, res) => {
         if (newUser) {
             await newUser.save();
             generateToken(newUser._id, res);
+
+            // emit to all connected clients
+            io.emit("newUser", {
+                _id: newUser._id,
+                fullName: newUser.fullName,
+                profilePic: newUser.profilePic
+            });
 
             res.status(201).json({
                 _id: newUser._id,

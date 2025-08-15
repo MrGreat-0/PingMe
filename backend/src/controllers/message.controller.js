@@ -6,7 +6,7 @@ import { getReceiverSocketId, io } from "../lib/socket.js";
 export const getUsersForSidebar = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
-        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password -createdAt -updatedAt");
+        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-email -password -createdAt -updatedAt");
 
         res.status(200).json(filteredUsers);
     } catch (error) {
@@ -72,3 +72,15 @@ export const sendMessages = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+// export const getUserById = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+//         const user = await User.findById(userId).select("-email -password -createdAt -updatedAt");
+//         if (!user) return res.status(404).json({ message: "User not found" });
+//         res.status(200).json(user);
+//     } catch (error) {
+//         console.log("Error in getNewUser controller:", error.message);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// }

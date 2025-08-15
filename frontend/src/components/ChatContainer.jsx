@@ -23,16 +23,16 @@ const ChatContainer = () => {
 
   const messageEndRef = useRef(null);
 
-useEffect(() => {
-  if (selectedUser?._id) {
-    dispatch(getMessages(selectedUser._id));
-    dispatch(subscribeToMessages());
-    
-    return () => {
-      dispatch(unsubscribeFromMessages());
-    };
-  }
-}, [selectedUser?._id, dispatch]);
+  useEffect(() => {
+    if (selectedUser?._id) {
+      dispatch(getMessages(selectedUser._id));
+      dispatch(subscribeToMessages());
+
+      return () => {
+        dispatch(unsubscribeFromMessages());
+      };
+    }
+  }, [selectedUser?._id, dispatch]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {

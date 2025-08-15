@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedUser } from "../features/chat/chatSlice";
-import { getUsers } from "../features/chat/chatThunk";
+import {
+  getUsers,
+  subscribeToUsers,
+  unsubscribeFromUsers,
+} from "../features/chat/chatThunk";
 
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users } from "lucide-react";
@@ -19,6 +23,11 @@ const Sidebar = () => {
 
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(subscribeToUsers());
+
+    return () => {
+      dispatch(unsubscribeFromUsers());
+    };
   }, [dispatch]);
 
   const filteredUsers = showOnlineOnly
